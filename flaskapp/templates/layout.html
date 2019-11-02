@@ -1,0 +1,86 @@
+{# Default page variables #}
+{% set head_title       = head_title       | default("Sample flaskapp") %}
+{% set ico_file_name    = ico_file_name    | default("favicon") %}
+{% set meta_description = meta_description | default("Website description") %}
+{% set meta_keywords    = meta_keywords    | default("webpage,sample,test") %}
+{% set assets_css       = assets_css       | default(False) %}
+{% set assets_js        = assets_js        | default(False) %}
+{% set nav_bar          = nav_bar          | default(True) %}
+{% set nav_title        = nav_title        | default("Sample title") %}
+
+
+
+<!DOCTYPE html>
+<html>
+
+
+    <head>
+
+        <title>{{ head_title }}</title>
+        {% set icon_file_path = "images/ico/"+ico_file_name+".ico" %}
+        <!-- <link type="image/x-icon" rel="shortcut icon" href="{{url_for('static',filename=icon_file_path)}}"> -->
+        
+        {# Meta tags #}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="Nitish Garg">
+        <meta name="description" content="{{ meta_description }}">
+        <meta name="keywords" content="{{ meta_keywords }}">
+
+        {# External stylesheets (bootstrap, font-awesome, fonts) #}
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600">
+
+        {# Common CSS #}
+        {% assets "common_css" %}
+        <link rel="stylesheet" href="{{ ASSET_URL }}" />
+        {% endassets %}
+
+        {# Page wise CSS #}
+        {% if assets_css != False %}
+        {% assets assets_css %}
+        <link rel="stylesheet" href="{{ ASSET_URL }}" />
+        {% endassets %}
+        {% endif %}
+
+        {# Other head content #}
+        {% block head %}{% endblock %}
+
+    </head>
+
+
+    <body>
+
+        {# Include navbar #}
+        {% if nav_bar != False %}
+        {% include 'navbar.html' %}
+        {% endif %}
+
+        {# Include body content #}
+        {% block body %}{% endblock %}
+
+        {# External js files (jquery, popper, bootstrap) #}
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+        {# Common JS file #}
+        {% assets "common_js" %}
+        <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+        {% endassets %}
+
+        {# Include scripts which can be used to pass jinja variables to page-specific js #}
+        {% block scripts %}{% endblock %}
+
+        {# Page-wise JS file #}
+        {% if assets_js != False %}
+        {% assets assets_js %}
+        <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+        {% endassets %}
+        {% endif %}
+
+    </body>
+
+
+</html>
