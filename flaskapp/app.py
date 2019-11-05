@@ -16,7 +16,7 @@ Compress(app)
 
 # App configuration
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = config.STATIC_FILE_MAX_AGE
-app.config['UPLOAD_FOLDER'] = C.UPLOADS_FOLDER
+app.config['UPLOAD_FOLDER'] = config.UPLOADS_DIR
 
 # MongoDB
 app.config["MONGO_HOST"] = config.MONGO_HOST
@@ -34,7 +34,7 @@ app.url_map.strict_slashes = False
 app.register_blueprint(routes_module)
 
 
-# Static data files
-@app.route('/datafile/<path:filename>')
-def loadDataFile(filename):
-    return send_from_directory(app.static_folder + C.DATA_FILE_DIR, filename)
+# Uncomment and configure below function to enable downloading static files
+# @app.route('/datafile/<path:filename>')
+# def downloadFile(filename):
+#     return send_from_directory(app.static_folder + config.DOWNLOADS_DIR, filename)

@@ -6,3 +6,4 @@
 venv/
 # Flask static file cache
 flaskapp/static/.webassets-cache/
+flaskapp/static/public/
